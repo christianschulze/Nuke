@@ -1,0 +1,187 @@
+#! C:/Program Files/Nuke6.3v2/Nuke6.3.exe -nx
+version 6.3 v2
+define_window_layout_xml {<?xml version="1.0" encoding="UTF-8"?>
+<layout version="1.0">
+    <window x="0" y="0" w="1936" h="1040" screen="0">
+        <splitter orientation="1">
+            <split size="1214"/>
+            <splitter orientation="1">
+                <split size="40"/>
+                <dock id="" hideTitles="1" activePageId="Toolbar.1">
+                    <page id="Toolbar.1"/>
+                </dock>
+                <split size="1170"/>
+                <splitter orientation="2">
+                    <split size="781"/>
+                    <dock id="" activePageId="DAG.1">
+                        <page id="DAG.1"/>
+                    </dock>
+                    <split size="194"/>
+                    <dock id="" activePageId="Curve Editor.1">
+                        <page id="Curve Editor.1"/>
+                        <page id="DopeSheet.1"/>
+                    </dock>
+                </splitter>
+            </splitter>
+            <split size="702"/>
+            <splitter orientation="2">
+                <split size="781"/>
+                <dock id="" activePageId="Properties.1">
+                    <page id="Properties.1"/>
+                    <page id="Script Editor.1"/>
+                    <page id="uk.co.thefoundry.DiskCache"/>
+                </dock>
+                <split size="194"/>
+                <dock id="" activePageId="Progress.1">
+                    <page id="Progress.1"/>
+                    <page id="Error Console.1"/>
+                </dock>
+            </splitter>
+        </splitter>
+    </window>
+    <window x="-1280" y="0" w="1280" h="1024" fullscreen="1" screen="1">
+        <splitter orientation="2">
+            <split size="1024"/>
+            <dock id="" activePageId="Viewer.1">
+                <page id="Viewer.1"/>
+            </dock>
+        </splitter>
+    </window>
+</layout>
+}
+Root {
+ inputs 0
+ name E:/_OM/nuke/script-setups/GhostShake.nk
+ frame 268
+ first_frame 0
+ last_frame 274
+ lock_range true
+ fps 25
+ format "1920 1080 0 0 1920 1080 1 HD"
+ proxy true
+ proxy_type scale
+ proxy_format "1024 778 0 0 1024 778 1 1K_Super_35(full-ap)"
+}
+add_layer {rgba rgba.water}
+Constant {
+ inputs 0
+ channels rgba
+ color 1
+ name Constant1
+ xpos -590
+ ypos -309
+}
+Input {
+ inputs 0
+ name InputForeground
+ xpos -480
+ ypos -417
+ number 1
+}
+Invert {
+ name Invert1
+ xpos -480
+ ypos -333
+}
+ChannelMerge {
+ inputs 2
+ operation minus
+ name ChannelMerge1
+ xpos -480
+ ypos -297
+}
+Premult {
+ name Premult1
+ xpos -480
+ ypos -249
+}
+Dot {
+ name Dot2
+ xpos -446
+ ypos -198
+}
+set N185063d0 [stack 0]
+Dot {
+ name Dot1
+ xpos -446
+ ypos -78
+}
+CameraShake2 {
+ name CameraShake2_7
+ label "\[value amplitude] px at \[value frequency]"
+ xpos -370
+ ypos -87
+ disable {{amplitude==0 i}}
+ amplitude {{-parent.Parameter.Amplitude i}}
+ frequency 1.2
+ cs_center {960 540}
+ motionblur 4
+ shutter 10
+}
+push $N185063d0
+CameraShake2 {
+ name CameraShake2_2
+ label "\[value amplitude] px at \[value frequency]"
+ xpos -370
+ ypos -207
+ disable {{amplitude==0}}
+ amplitude {{parent.Parameter.Amplitude}}
+ frequency 1.2
+ cs_center {960 540}
+ motionblur 4
+ shutter 10
+}
+ColorCorrect {
+ gamma {1 1.2 1.5 1}
+ name ColorCorrect25
+ xpos -370
+ ypos -153
+}
+Input {
+ inputs 0
+ name InputBackground
+ xpos -150
+ ypos -417
+}
+Merge2 {
+ inputs 2
+ operation screen
+ mix {{"((noise(frame * parent.Parameter.Flicker) + 1) * parent.CameraShake2_2.amplitude / \[python nuke.toNode('Parameter').knob('Amplitude').max()] * parent.Parameter.ShakeTransparency) * parent.Parameter.Fade"}}
+ name Merge12
+ xpos -150
+ ypos -153
+}
+Merge2 {
+ inputs 2
+ mix {{"(1 - (noise(frame * parent.Parameter.Flicker) + 1) * parent.CameraShake2_2.amplitude / \[python nuke.toNode('Parameter').knob('Amplitude').max()] * parent.Parameter.ShakeTransparency) * parent.Parameter.Fade"}}
+ name Merge4
+ xpos -150
+ ypos -81
+}
+Output {
+ name Output1
+ xpos -150
+ ypos 15
+}
+Viewer {
+ frame 268
+ fps 25
+ input_process false
+ name Viewer1
+ xpos -150
+ ypos 63
+}
+NoOp {
+ inputs 0
+ name Parameter
+ xpos 70
+ ypos -153
+ addUserKnob {20 User}
+ addUserKnob {7 ShakeTransparency}
+ ShakeTransparency 1
+ addUserKnob {7 Amplitude R 0 100}
+ Amplitude 50
+ addUserKnob {7 Flicker}
+ addUserKnob {7 Fade}
+ Fade 1
+}

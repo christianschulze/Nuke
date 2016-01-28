@@ -1,0 +1,87 @@
+set cut_paste_input [stack 0]
+version 8.0 v1
+push $cut_paste_input
+Group {
+ name CS_RoughenEdges
+ help "Adds a noise to semi-transparent alpha. This way all soft edges are roughened. Hard edges shouldn't be affected."
+ tile_color 0x990000ff
+ selected true
+ xpos -150
+ ypos -153
+ addUserKnob {20 Noise}
+ addUserKnob {41 type T Noise2.type}
+ addUserKnob {41 size l x/ysize T Noise2.size}
+ addUserKnob {41 zoffset l z T Noise2.zoffset}
+ addUserKnob {41 octaves T Noise2.octaves}
+ addUserKnob {41 nyquist l "clip at Nyquist limit" T Noise2.nyquist}
+ addUserKnob {41 lacunarity T Noise2.lacunarity}
+ addUserKnob {41 gain T Noise2.gain}
+ addUserKnob {41 gamma T Noise2.gamma}
+ addUserKnob {26 ""}
+ addUserKnob {26 Creator l "" +STARTLINE T "CS_RoughenEdges v1.0 by Christian Schulze - www.christian-schulze.eu"}
+}
+ Input {
+  inputs 0
+  name InputAlpha
+  xpos 70
+  ypos -9
+ }
+set N1351b830 [stack 0]
+ Dot {
+  name Dot2
+  xpos -116
+  ypos -6
+ }
+set N1351d550 [stack 0]
+ Dot {
+  name Dot1
+  xpos -336
+  ypos -6
+ }
+ Expression {
+  channel0 none
+  channel1 none
+  channel2 none
+  expr3 "a < 1 && a > 0 ? 1 - a : 0"
+  name Expression1
+  label "inverted edge"
+  xpos -370
+  ypos 129
+ }
+push $N1351d550
+ Remove {
+  name Remove1
+  xpos -150
+  ypos 57
+ }
+ Noise {
+  inputs 1+1
+  output alpha
+  size 250
+  gain 0.8
+  gamma 1
+  center {2048 1024}
+  name Noise2
+  xpos -150
+  ypos 129
+ }
+push $N1351b830
+ ChannelMerge {
+  inputs 2
+  operation from
+  name ChannelMerge3
+  xpos 70
+  ypos 123
+ }
+ Clamp {
+  channels alpha
+  name Clamp1
+  xpos 70
+  ypos 225
+ }
+ Output {
+  name Output
+  xpos 70
+  ypos 303
+ }
+end_group

@@ -1,0 +1,143 @@
+#! C:/Program Files/Nuke6.1v2/Nuke6.1.exe -nx
+version 6.1 v2
+define_window_layout_xml {<?xml version="1.0" encoding="UTF-8"?>
+<layout version="1.0">
+    <window x="0" y="0" w="1920" h="1080" fullscreen="1" screen="1">
+        <splitter orientation="1">
+            <split size="1214"></split>
+            <splitter orientation="1">
+                <split size="46"></split>
+                <dock id="" hideTitles="1" activePageId="Toolbar.1">
+                    <page id="Toolbar.1"></page>
+                </dock>
+                <split size="1164"></split>
+                <splitter orientation="2">
+                    <split size="815"></split>
+                    <dock id="" activePageId="DAG.1">
+                        <page id="DAG.1"></page>
+                    </dock>
+                    <split size="235"></split>
+                    <dock id="" activePageId="Curve Editor.1">
+                        <page id="Curve Editor.1"></page>
+                    </dock>
+                </splitter>
+            </splitter>
+            <split size="702"></split>
+            <dock id="" activePageId="Properties.1">
+                <page id="Properties.1"></page>
+            </dock>
+        </splitter>
+    </window>
+    <window x="1920" y="0" w="1280" h="1024" fullscreen="1" screen="0">
+        <splitter orientation="2">
+            <split size="1024"></split>
+            <dock id="" activePageId="Viewer.1">
+                <page id="Viewer.1"></page>
+            </dock>
+        </splitter>
+    </window>
+</layout>
+}
+Root {
+ inputs 0
+ name "E:/Eigene Dateien/_DA/bumpboss.nk"
+ last_frame 1
+ fps 25
+ format "1920 1080 0 0 1920 1080 1 HD"
+ proxy_type scale
+ proxy_format "1024 778 0 0 1024 778 1 1K_Super_35(full-ap)"
+}
+RotoPaint {
+ inputs 0
+ curves {AnimTree: "" {
+ Version: 1.2
+ Flag: 0
+ RootNode: 1
+ Node: {
+  NodeName: "Root" {
+   Flag: 512
+   NodeType: 1
+   Transform: 0 0 S 0 0 S 0 0 S 0 0 S 0 1 S 0 1 S 0 0 S 0 960 S 0 540 
+   NumOfAttributes: 10
+   "vis" S 0 1 "opc" S 0 1 "mbo" S 0 1 "mb" S 0 1 "mbs" S 0 0.5 "fo" S 0 1 "fx" S 0 0 "fy" S 0 0 "ff" S 0 1 "ft" S 0 0 
+  }
+  NumOfChildren: 1
+  Node: {
+   NodeName: "Bezier1" {
+    Flag: 576
+    NodeType: 3
+    CurveGroup: "" {
+     Transform: 0 0 S 1 1 0 S 1 1 0 S 1 1 0 S 1 1 1 S 1 1 1 S 1 1 0 S 1 1 933.25 S 1 1 593.25 
+     Flag: 0
+     NumOfCubicCurves: 2
+     CubicCurve: "" {
+      Type: 0 Flag: 8192 Dim: 2
+      NumOfPoints: 12
+      0 S 1 1 184 S 1 1 -90 0 0 S 1 1 1003 S 1 1 799 0 0 S 1 1 -184 S 1 1 90 0 0 S 1 1 -125.953 S 1 1 61.642 0 0 S 1 1 701 S 1 1 684 0 0 S 1 1 329 S 1 1 -161 0 0 S 1 1 -501 S 1 1 27 0 0 S 1 1 979 S 1 1 343 0 0 S 1 1 391.441 S 1 1 -21.1464 0 0 S 1 1 228 S 1 1 -49 0 0 S 1 1 1044 S 1 1 596 0 0 S 1 1 -228 S 1 1 49 0 
+     }
+     CubicCurve: "" {
+      Type: 0 Flag: 8192 Dim: 2
+      NumOfPoints: 12
+      0 S 1 1 184 S 1 1 -90 0 0 S 1 1 0 S 1 1 0 0 0 S 1 1 -184 S 1 1 90 0 0 S 1 1 -125.953 S 1 1 61.642 0 0 S 1 1 0 S 1 1 0 0 0 S 1 1 329 S 1 1 -161 0 0 S 1 1 -501 S 1 1 27 0 0 S 1 1 0 S 1 1 0 0 0 S 1 1 391.441 S 1 1 -21.1464 0 0 S 1 1 228 S 1 1 -49 0 0 S 1 1 0 S 1 1 0 0 0 S 1 1 -228 S 1 1 49 0 
+     }
+     NumOfAttributes: 43
+     "vis" S 0 1 "r" S 0 1 "g" S 0 1 "b" S 0 0 "a" S 0 1 "ro" S 0 0 "go" S 0 0 "bo" S 0 0 "ao" S 0 0 "opc" S 0 1 "bm" S 0 0 "inv" S 0 0 "mbo" S 0 0 "mb" S 0 1 "mbs" S 0 0.5 "mbsot" S 0 0 "mbso" S 0 0 "fo" S 0 1 "fx" S 0 0 "fy" S 0 0 "ff" S 0 1 "ft" S 0 0 "src" S 0 0 "stx" S 0 0 "sty" S 0 0 "str" S 0 0 "sr" S 0 0 "ssx" S 0 1 "ssy" S 0 1 "ss" S 0 0 "spx" S 0 960 "spy" S 0 540 "stot" S 0 0 "sto" S 0 0 "sv" S 0 0 "sf" S 0 1 "sb" S 0 1 "nv" S 0 1 "view1" S 0 1 "ltn" S 0 1 "ltm" S 0 1 "ltt" S 0 0 "tt" S 0 4 
+    }
+   }
+   NumOfChildren: 0
+  }
+ }
+}
+}
+ toolbox {selectAll {
+  { createBezier tt 4 }
+} }
+ toolbar_brush_hardness 0.200000003
+ toolbar_lifetime_type all
+ toolbar_source_transform_scale {1 1}
+ toolbar_source_transform_center {320 240}
+ color {1 1 0 1}
+ lifetime_type "all frames"
+ translate {{curve x1 0} {curve x1 0}}
+ rotate {{curve x1 0}}
+ scale {{curve x1 1}}
+ skew {{curve x1 0}}
+ center {{curve x1 933.25} {curve x1 593.25}}
+ motionblur_shutter_offset_type centred
+ source_black_outside true
+ name RotoPaint1
+ xpos 157
+ ypos -25
+}
+set N293830a0 [stack 0]
+push $N293830a0
+Constant {
+ inputs 0
+ channels rgb
+ color 0.5
+ name Constant1
+ xpos -63
+ ypos -48
+}
+BumpBoss {
+ inputs 2
+ lightposition {1600 800}
+ bumpsize 50
+ center {960 540}
+ name BumpBoss1
+ xpos 47
+ ypos -31
+}
+Merge2 {
+ inputs 2
+ name Merge1
+ xpos 47
+ ypos 73
+}
+Viewer {
+ frame 1
+ input_process false
+ name Viewer1
+ xpos 47
+ ypos 194
+}

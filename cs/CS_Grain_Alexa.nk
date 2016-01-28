@@ -1,0 +1,22 @@
+set cut_paste_input [stack 0]
+version 7.0 v4
+push $cut_paste_input
+Grain2 {
+ name Grain2_1
+ label CS_Alexa
+ selected true
+ xpos 950
+ ypos -4
+ seed 175
+ red_size 2.3
+ green_size 2.5
+ blue_size 2.4
+ red_i 0.1
+ green_i 0.1
+ blue_i 0.1
+ red_m 0.12
+ green_m 0.1
+ blue_m 0.11
+ black 0.011
+ minimum {0 0 0}
+}

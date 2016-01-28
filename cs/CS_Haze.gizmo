@@ -1,0 +1,68 @@
+#! C:/Program Files/Nuke6.3v2/Nuke6.3.exe -nx
+version 6.3 v2
+Gizmo {
+ help "Generates a haze around bright Pixels."
+ tile_color 0x990000ff
+ addUserKnob {20 CS_Haze}
+ addUserKnob {41 Threshold t "Luminance starting point for haze." T Grade1.blackpoint}
+ addUserKnob {41 Color t "Color correction." T Grade1.white}
+ addUserKnob {41 Size t "Size of the haze." T Blur1.size}
+ addUserKnob {6 hazeOnly l "Generate Haze only" +STARTLINE}
+ addUserKnob {26 ""}
+ addUserKnob {26 Creator l "" +STARTLINE T "CS_Haze v1.1 by Christian Schulze - www.christian-schulze.eu"}
+}
+ Input {
+  inputs 0
+  name Input
+  xpos 33
+  ypos 100
+ }
+set N6e38c90 [stack 0]
+ Grade {
+  blackpoint 0.9
+  white {4 2 1 0}
+  name Grade1
+  xpos -77
+  ypos 100
+ }
+ BlackOutside {
+  name BlackOutside1
+  xpos -77
+  ypos 124
+ }
+ Blur {
+  channels rgb
+  size 200
+  name Blur1
+  xpos -77
+  ypos 148
+ }
+set N8273fa0 [stack 0]
+ Dot {
+  name Dot1
+  xpos -43
+  ypos 175
+ }
+push $N8273fa0
+push $N6e38c90
+ Merge2 {
+  inputs 2
+  operation screen
+  name Merge1
+  xpos 33
+  ypos 148
+ }
+ Switch {
+  inputs 2
+  which {{parent.hazeOnly}}
+  name Switch1
+  tile_color 0xff0000ff
+  xpos 33
+  ypos 172
+ }
+ Output {
+  name Output
+  xpos 33
+  ypos 196
+ }
+end_group

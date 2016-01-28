@@ -1,0 +1,164 @@
+#! C:/Program Files/Nuke6.2v1/Nuke6.2.exe -nx
+version 6.2 v1
+define_window_layout_xml {<?xml version="1.0" encoding="UTF-8"?>
+<layout version="1.0">
+    <window x="-8" y="-8" w="1936" h="1056" screen="0">
+        <splitter orientation="1">
+            <split size="1214"></split>
+            <splitter orientation="1">
+                <split size="40"></split>
+                <dock id="" hideTitles="1" activePageId="Toolbar.1">
+                    <page id="Toolbar.1"></page>
+                </dock>
+                <split size="1170"></split>
+                <splitter orientation="2">
+                    <split size="792"></split>
+                    <dock id="" activePageId="DAG.1">
+                        <page id="DAG.1"></page>
+                        <page id="DAG.2"></page>
+                    </dock>
+                    <split size="196"></split>
+                    <dock id="" activePageId="Curve Editor.1">
+                        <page id="Curve Editor.1"></page>
+                    </dock>
+                </splitter>
+            </splitter>
+            <split size="702"></split>
+            <dock id="" activePageId="Properties.1">
+                <page id="Properties.1"></page>
+                <page id="Script Editor.1"></page>
+            </dock>
+        </splitter>
+    </window>
+    <window x="1920" y="0" w="1280" h="1024" fullscreen="1" screen="1">
+        <splitter orientation="2">
+            <split size="1024"></split>
+            <dock id="" activePageId="Viewer.1">
+                <page id="Viewer.2"></page>
+                <page id="Viewer.1"></page>
+            </dock>
+        </splitter>
+    </window>
+</layout>
+}
+Root {
+ inputs 0
+ name E:/_DA/Projects/nukescript-setups/HeatDistortion.nk
+ format "2048 1556 0 0 2048 1556 1 2K_Super_35(full-ap)"
+ proxy true
+ proxy_type scale
+ proxy_format "1024 778 0 0 1024 778 1 1K_Super_35(full-ap)"
+}
+Group {
+ inputs 0
+ name HeatDistortion
+ xpos -150
+ ypos -154
+ addUserKnob {20 HeatDistortion}
+ addUserKnob {41 Glow t "Glow inside of the mask" T InBallGlow1.brightness}
+ addUserKnob {41 Expand t "Size of the heat cloud outside the mask" T Dilate1.size}
+ addUserKnob {41 uv_scale l Distortion T IDistort1.uv_scale}
+ addUserKnob {20 Noise n 1}
+ addUserKnob {41 Detail T Noise1.size}
+ addUserKnob {41 Frequence T Noise1.zoffset}
+ addUserKnob {20 endGroup n -1}
+ addUserKnob {20 ColorCorrection n 1}
+ addUserKnob {41 saturation T InBallCC1.saturation}
+ addUserKnob {41 contrast T InBallCC1.contrast}
+ addUserKnob {41 gamma T InBallCC1.gamma}
+ addUserKnob {41 gain T InBallCC1.gain}
+ addUserKnob {41 offset T InBallCC1.offset}
+}
+ Input {
+  inputs 0
+  name Inputmask
+  xpos -260
+  ypos -298
+  number 1
+ }
+ Constant {
+  inputs 0
+  channels alpha
+  color 1
+  name Constant1
+  xpos -150
+  ypos -214
+ }
+ Copy {
+  inputs 2
+  channels alpha
+  name Copy1
+  xpos -260
+  ypos -197
+ }
+set N176ba950 [stack 0]
+ Dilate {
+  channels alpha
+  size 100
+  name Dilate1
+  xpos -260
+  ypos -145
+ }
+ Noise {
+  output alpha
+  replace true
+  maskChannelInput rgba.alpha
+  size 100
+  zoffset {{frame/2}}
+  center {960 540}
+  name Noise1
+  xpos -260
+  ypos -107
+ }
+push $N176ba950
+push $N176ba950
+ Input {
+  inputs 0
+  name Inputsrc
+  xpos -370
+  ypos -298
+ }
+ ColorCorrect {
+  inputs 1+1
+  gamma {1 0.5 0.5 1}
+  maskChannelInput -rgba.alpha
+  name InBallCC1
+  xpos -370
+  ypos -223
+ }
+ Glow {
+  inputs 1+1
+  brightness 2
+  maskChannelInput -rgba.alpha
+  name InBallGlow1
+  xpos -370
+  ypos -145
+ }
+ ShuffleCopy {
+  inputs 2
+  in alpha
+  red alpha
+  green alpha
+  blue alpha
+  black red
+  white red
+  red2 red
+  green2 red
+  out motion
+  name ShuffleCopy1
+  xpos -370
+  ypos -101
+ }
+ IDistort {
+  uv motion
+  uv_scale {50 -100}
+  name IDistort1
+  xpos -370
+  ypos -75
+ }
+ Output {
+  name Output
+  xpos -370
+  ypos 19
+ }
+end_group

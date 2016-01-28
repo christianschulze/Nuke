@@ -1,0 +1,61 @@
+set cut_paste_input [stack 0]
+version 8.0 v6
+BackdropNode {
+ inputs 0
+ name BackdropNode1
+ tile_color 0xc0c0c0ff
+ label "Generic Regrain"
+ note_font_size 42
+ selected true
+ xpos 393
+ ypos 337
+ bdwidth 314
+ bdheight 285
+}
+push $cut_paste_input
+Dot {
+ name Dot26
+ selected true
+ xpos 544
+ ypos 426
+}
+set N52b82f50 [stack 0]
+Dot {
+ name Dot27
+ selected true
+ xpos 434
+ ypos 594
+}
+push $N52b82f50
+Keyer {
+ invert true
+ operation "luminance key"
+ name Keyer1
+ selected true
+ xpos 510
+ ypos 489
+}
+Grain2 {
+ name Grain2_1
+ label other
+ selected true
+ xpos 510
+ ypos 537
+ red_size 4.2
+ green_size 3.3
+ blue_size 4.3
+ red_m 0.13
+ green_m 0.11
+ blue_m 0.165
+ black {0.011 0.003 0.006}
+ minimum {0 0 0}
+}
+Copy {
+ inputs 2
+ from0 rgba.alpha
+ to0 rgba.alpha
+ name Copy2
+ selected true
+ xpos 510
+ ypos 585
+}

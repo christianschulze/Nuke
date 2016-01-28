@@ -1,0 +1,94 @@
+#! /Applications/Nuke6.3v4/NukeX6.3v4.app/../Nuke6.3v4.app/Contents/MacOS/Nuke6.3v4 -nx
+version 6.3 v4
+define_window_layout_xml {<?xml version="1.0" encoding="UTF-8"?>
+<layout version="1.0">
+    <window x="0" y="22" w="1680" h="942" screen="0">
+        <splitter orientation="1">
+            <split size="1062"/>
+            <splitter orientation="1">
+                <split size="40"/>
+                <dock id="" hideTitles="1" activePageId="Toolbar.1">
+                    <page id="Toolbar.1"/>
+                </dock>
+                <split size="1018"/>
+                <splitter orientation="2">
+                    <split size="458"/>
+                    <dock id="" activePageId="Viewer.1">
+                        <page id="Viewer.1"/>
+                    </dock>
+                    <split size="458"/>
+                    <dock id="" activePageId="DAG.1">
+                        <page id="DAG.1"/>
+                        <page id="Curve Editor.1"/>
+                        <page id="DopeSheet.1"/>
+                    </dock>
+                </splitter>
+            </splitter>
+            <split size="614"/>
+            <dock id="" activePageId="Properties.1">
+                <page id="Properties.1"/>
+            </dock>
+        </splitter>
+    </window>
+</layout>
+}
+Root {
+ inputs 0
+ name /Users/chris/.nuke/uv-remap.nk
+ fps 25
+ format "1920 1080 0 0 1920 1080 1 HD"
+ proxy_type scale
+ proxy_format "1024 778 0 0 1024 778 1 1K_Super_35(full-ap)"
+}
+Ramp {
+ inputs 0
+ p0 {0 0}
+ p1 {1920 0}
+ color {1 0 0 0}
+ name Ramp1
+ xpos -40
+ ypos -177
+}
+Ramp {
+ inputs 0
+ p0 {0 0}
+ p1 {0 1080}
+ color {0 1 0 0}
+ name Ramp2
+ xpos 180
+ ypos -177
+}
+Merge2 {
+ inputs 2
+ operation plus
+ name Merge1
+ xpos 70
+ ypos -105
+}
+PostageStamp {
+ name PostageStamp1
+ xpos 70
+ ypos -81
+ postage_stamp true
+}
+CheckerBoard2 {
+ inputs 0
+ name CheckerBoard1
+ xpos -150
+ ypos -201
+}
+STMap {
+ inputs 2
+ uv rgb
+ name STMap1
+ xpos -150
+ ypos -62
+}
+Viewer {
+ frame 1
+ fps 25
+ input_process false
+ name Viewer1
+ xpos -150
+ ypos -28
+}

@@ -1,0 +1,131 @@
+#! C:/Program Files/Nuke6.3v2/Nuke6.3.exe -nx
+version 6.3 v2
+Gizmo {
+ tile_color 0x990000ff
+ addUserKnob {20 CS_ChromaticAbberation}
+ addUserKnob {20 Red_Cyan l Red/Cyan n 1}
+ addUserKnob {41 distortion1 l "Radial Distortion 1" T LensDistortionRed.distortion1}
+ addUserKnob {41 distortion2 l "Radial Distortion 2" T LensDistortionRed.distortion2}
+ addUserKnob {41 distortionCenter l "Distortion Center" T LensDistortionRed.distortionCenter}
+ addUserKnob {41 mix T IntensityRed.mix}
+ addUserKnob {20 endGroup n -1}
+ addUserKnob {20 Blue_Yellow l Blue/Yellow n 1}
+ addUserKnob {41 distortion1_1 l "Radial Distortion 1" T LensDistortionBlue.distortion1}
+ addUserKnob {41 distortion2_1 l "Radial Distortion 2" T LensDistortionBlue.distortion2}
+ addUserKnob {41 distortionCenter_1 l "Distortion Center" T LensDistortionBlue.distortionCenter}
+ addUserKnob {20 endGroup_1 l endGroup n -1}
+ addUserKnob {41 mix_1 l mix T IntensityBlue.mix}
+ addUserKnob {26 ""}
+ addUserKnob {26 Creator l "" +STARTLINE T "CS_ChromaticAbberation v1.0 by Christian Schulze - www.christian-schulze.eu\nToolset by Chas Naylor"}
+}
+ Input {
+  inputs 0
+  name Input
+  xpos -40
+  ypos -177
+ }
+set N159abc60 [stack 0]
+ Dot {
+  name Dot3
+  xpos 104
+  ypos -174
+ }
+ Remove {
+  channels {rgba.red rgba.green -rgba.blue}
+  name CAblue
+  xpos 70
+  ypos -110
+ }
+set N159ac2c0 [stack 0]
+add_layer {rgba rgba.water}
+ Shuffle {
+  alpha white
+  name Shuffle2
+  xpos 180
+  ypos -104
+ }
+ LensDistortion1_0 {
+  serializeKnob ""
+  serialiseKnob "22 serialization::archive 4 0 0 0 0 0 0 0 0 0 0 0 0"
+  asymmetricDistortion {-0.005 0}
+  name LensDistortionBlue
+  xpos 180
+  ypos 15
+ }
+push $N159ac2c0
+ AddMix {
+  inputs 2
+  name IntensityBlue
+  xpos 70
+  ypos 15
+ }
+push $N159abc60
+ Dot {
+  name Dot2
+  xpos -116
+  ypos -174
+ }
+ Remove {
+  channels {-rgba.red rgba.green rgba.blue}
+  name CAred
+  xpos -150
+  ypos -111
+ }
+set N15a88110 [stack 0]
+ Shuffle {
+  alpha white
+  name Shuffle1
+  xpos -260
+  ypos -105
+ }
+ LensDistortion1_0 {
+  serializeKnob ""
+  serialiseKnob "22 serialization::archive 4 0 0 0 0 0 0 0 0 0 0 0 0"
+  distortion1 0.1
+  cardScale {1.127016664 1.127016664 1}
+  a -0.07418065518
+  b -0.01556531154
+  c -0.04112593457
+  name LensDistortionRed
+  xpos -260
+  ypos -33
+ }
+push $N15a88110
+ AddMix {
+  inputs 2
+  A {rgba.red -rgba.green -rgba.blue rgba.alpha}
+  B {rgba.red -rgba.green -rgba.blue -rgba.alpha}
+  output {rgba.red -rgba.green -rgba.blue -rgba.alpha}
+  name IntensityRed
+  xpos -150
+  ypos -33
+ }
+push $N159abc60
+ Remove {
+  channels {rgba.red -rgba.green rgba.blue}
+  name CAgreen
+  xpos -40
+  ypos -110
+ }
+ Merge2 {
+  inputs 2
+  operation plus
+  output rgb
+  name Merge5
+  xpos -40
+  ypos -33
+ }
+ Merge2 {
+  inputs 2
+  operation plus
+  output rgb
+  name Merge6
+  xpos -40
+  ypos 15
+ }
+ Output {
+  name Output
+  xpos -40
+  ypos 123
+ }
+end_group

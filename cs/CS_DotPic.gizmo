@@ -1,0 +1,24 @@
+#! C:/Program Files/Nuke6.3v2/Nuke6.3.exe -nx
+version 6.3 v2
+Gizmo {
+ addUserKnob {20 CS_DotPic}
+ addUserKnob {3 maxSize l "Maximum Size" t "Maximum Size of the picture in dots. Be careful with big numbers! It could take a while. Try the default first!"}
+ maxSize 50
+ addUserKnob {3 spacing l Spacing t "Spacing between the dots in pixels."}
+ spacing 10
+ addUserKnob {22 create_DotPic l "Create DotPic" T "maxRes = int(nuke.thisNode()\['maxSize'].getValue())\nspace = int(nuke.thisNode()\['spacing'].getValue())\n\nnode = nuke.thisNode()\nnode.end()\nw = node.width()\nh = node.height()\n\nhasAlpha = 'rgba.alpha' in node.channels()\n\nfactor = max(w, h) / maxRes\nxRes = int(w / factor)\nyRes = int(h / factor)\n\nstartX = node.xpos() + 100\nstartY = node.ypos()\n\ntry:\n    for y in range(1, yRes):\n        for x in range(1, xRes):\n            xPos = x * factor\n            yPos = y * factor\n\n            a = 1\n            if hasAlpha:\n                a = node.sample('alpha', xPos, yPos, factor, factor)\n            if a > 0:\n                r = node.sample('red', xPos, yPos, factor, factor)\n                g = node.sample('green', xPos, yPos, factor, factor)\n                b = node.sample('blue', xPos, yPos, factor, factor)\n                r = nuke.expr('to_sRGB(%s)' % r)\n                g = nuke.expr('to_sRGB(%s)' % g)\n                b = nuke.expr('to_sRGB(%s)' % b)\n                a = 255\n                c = int('%02x%02x%02x%02x' % (r, g, b, a), 16)\n\n                dot = nuke.nodes.Dot(tile_color = c, hide_input = True)\n                dot.setXYpos(startX + x * space, startY - y * space)\nexcept ValueError:\n    nuke.message('Please connect an input for this node! The DotPic will be created from this input image.')" +STARTLINE}
+ addUserKnob {26 ""}
+ addUserKnob {26 Creator l "" +STARTLINE T "CS_DotPic v1.0 by Christian Schulze - www.christian-schulze.eu"}
+}
+ Input {
+  inputs 0
+  name Input
+  xpos -40
+  ypos 207
+ }
+ Output {
+  name Output
+  xpos -40
+  ypos 303
+ }
+end_group

@@ -1,0 +1,19 @@
+set cut_paste_input [stack 0]
+version 8.0 v1
+push $cut_paste_input
+Expression {
+ temp_name0 xvalue
+ temp_expr0 (x-move.x+width)%width
+ temp_name1 yvalue
+ temp_expr1 (y-move.y+height)%height
+ expr0 "r(xvalue, yvalue)"
+ expr1 "g(xvalue, yvalue)"
+ expr2 "b(xvalue, yvalue)"
+ expr3 "a(xvalue, yvalue)"
+ name Expression1
+ selected true
+ xpos 70
+ ypos -92
+ addUserKnob {20 Repeater}
+ addUserKnob {12 move}
+}

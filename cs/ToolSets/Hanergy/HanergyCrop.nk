@@ -1,0 +1,18 @@
+set cut_paste_input [stack 0]
+version 8.0 v6
+push $cut_paste_input
+Crop {
+ box {{"(width - OutputDimensions.w) * HorizontalShift"} {"(height - OutputDimensions.h) * VerticalShift"} {"OutputDimensions.w + (width - OutputDimensions.w) * HorizontalShift"} {"OutputDimensions.h + (height - OutputDimensions.h) * VerticalShift"}}
+ name HanergyCrop
+ label "aspect 1:\[expr \[value OutputDimensions.w]. / \[value OutputDimensions.h]]"
+ selected true
+ xpos 400
+ ypos 585
+ addUserKnob {20 HanergyCrop}
+ addUserKnob {14 OutputDimensions R 0 100}
+ OutputDimensions {4096 1843}
+ addUserKnob {7 HorizontalShift}
+ HorizontalShift 0.5
+ addUserKnob {7 VerticalShift}
+ VerticalShift 0.5
+}

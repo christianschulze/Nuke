@@ -1,0 +1,21 @@
+set cut_paste_input [stack 0]
+version 8.0 v6
+push $cut_paste_input
+LensDistortion {
+ serializeKnob ""
+ serialiseKnob "22 serialization::archive 9 0 0 0 0 0 0 0 0 0 0 0 0"
+ distortion1 -0.03425462544
+ distortion2 0.005727343261
+ distortionCenter {0.03145828843 -0.04618510604}
+ invertDistortion true
+ cardScale {1.029438972 1.029438972 1}
+ a 0.005314211361
+ b -0.02169381268
+ c -0.01739020087
+ gridType "Thin Line"
+ alignmentCorrection {1.02324307 0.01292871777 2.41257203e-006 -0.0116850147 1.023654819 -7.172035055e-008 -17.14752007 -78.9901886 1}
+ name LensDistortionCP15
+ selected true
+ xpos 499
+ ypos 605
+}

@@ -1,0 +1,213 @@
+#! /Applications/Nuke6.3v4/NukeX6.3v4.app/../Nuke6.3v4.app/Contents/MacOS/Nuke6.3v4 -nx
+version 6.3 v4
+define_window_layout_xml {<?xml version="1.0" encoding="UTF-8"?>
+<layout version="1.0">
+    <window x="0" y="22" w="1680" h="949" screen="0">
+        <splitter orientation="1">
+            <split size="1062"/>
+            <splitter orientation="1">
+                <split size="40"/>
+                <dock id="" hideTitles="1" activePageId="Toolbar.1">
+                    <page id="Toolbar.1"/>
+                </dock>
+                <split size="1018"/>
+                <splitter orientation="2">
+                    <split size="621"/>
+                    <dock id="" activePageId="Viewer.1">
+                        <page id="Viewer.1"/>
+                    </dock>
+                    <split size="302"/>
+                    <dock id="" activePageId="DAG.1">
+                        <page id="DAG.1"/>
+                        <page id="Curve Editor.1"/>
+                        <page id="DopeSheet.1"/>
+                    </dock>
+                </splitter>
+            </splitter>
+            <split size="614"/>
+            <dock id="" activePageId="Properties.1">
+                <page id="Properties.1"/>
+                <page id="Script Editor.1"/>
+            </dock>
+        </splitter>
+    </window>
+</layout>
+}
+Root {
+ inputs 0
+ name /Users/chris/.nuke/script-setups/simple-star-filter.nk
+ frame 76
+ fps 25
+ format "1920 1080 0 0 1920 1080 1 HD"
+ proxy true
+ proxy_type scale
+ proxy_format "1024 778 0 0 1024 778 1 1K_Super_35(full-ap)"
+}
+Read {
+ inputs 0
+ file "/Users/chris/Pictures/_Roadtrip_selection/2011_08_27 - Roadtrip Day 5 - La Ciotat, Camping, Wifi Cafehaus, Schwimmen, Abendessen/IMG_1842.JPG"
+ format "5184 3456 0 0 5184 3456 1 "
+ origset true
+ name Read2
+ xpos -40
+ ypos -144
+}
+set N158559e0 [stack 0]
+Grade {
+ blackpoint {{parent.StarFilter.Threshold}}
+ name Grade1
+ xpos 70
+ ypos -115
+}
+Saturation {
+ saturation 0.8
+ name Saturation1
+ xpos 70
+ ypos -91
+}
+set Nfbb2700 [stack 0]
+Dot {
+ name Dot4
+ xpos 324
+ ypos -88
+}
+set Nfa181f0 [stack 0]
+Dot {
+ name Dot1
+ xpos 434
+ ypos -88
+}
+set N1f1487d0 [stack 0]
+Dot {
+ name Dot2
+ xpos 544
+ ypos -88
+}
+set N15899390 [stack 0]
+Dot {
+ name Dot3
+ xpos 654
+ ypos -88
+}
+DirBlurWrapper {
+ BlurType linear
+ BlurCenter {0 0}
+ BlurLength {{parent.StarFilter.Length}}
+ BlurAngle {{"parent.StarFilter.Rotation + 270"}}
+ target {0 0}
+ name DirBlurWrapper4
+ xpos 620
+ ypos -67
+}
+push $N15899390
+DirBlurWrapper {
+ BlurType linear
+ BlurCenter {0 0}
+ BlurLength {{parent.StarFilter.Length}}
+ BlurAngle {{"parent.StarFilter.Rotation + 180"}}
+ target {0 0}
+ name DirBlurWrapper3
+ xpos 510
+ ypos -67
+}
+Merge2 {
+ inputs 2
+ operation screen
+ name Merge4
+ xpos 510
+ ypos -33
+}
+push $N1f1487d0
+DirBlurWrapper {
+ BlurType linear
+ BlurCenter {0 0}
+ BlurLength {{parent.StarFilter.Length}}
+ BlurAngle {{"parent.StarFilter.Rotation + 90"}}
+ target {0 0}
+ name DirBlurWrapper2
+ xpos 400
+ ypos -67
+}
+Merge2 {
+ inputs 2
+ operation screen
+ name Merge3
+ xpos 400
+ ypos -33
+}
+push $Nfa181f0
+DirBlurWrapper {
+ BlurType linear
+ BlurCenter {0 0}
+ BlurLength {{parent.StarFilter.Length}}
+ BlurAngle {{parent.StarFilter.Rotation}}
+ target {0 0}
+ name DirBlurWrapper1
+ xpos 290
+ ypos -67
+}
+Merge2 {
+ inputs 2
+ operation screen
+ name Merge2
+ xpos 290
+ ypos -33
+}
+ColorCorrect {
+ saturation 0.5
+ contrast 2
+ name ColorCorrect1
+ xpos 290
+ ypos -9
+}
+push $Nfbb2700
+Blur {
+ size {{parent.StarFilter.Haze}}
+ name Blur1
+ xpos 70
+ ypos -67
+}
+ColorCorrect {
+ gamma 1.5
+ name ColorCorrect2
+ xpos 70
+ ypos -33
+}
+Merge2 {
+ inputs 2
+ operation screen
+ name Merge5
+ xpos 70
+ ypos -9
+}
+push $N158559e0
+Merge2 {
+ inputs 2
+ operation screen
+ name Merge1
+ xpos -40
+ ypos -9
+}
+Viewer {
+ frame 76
+ fps 25
+ input_process false
+ name Viewer1
+ xpos -40
+ ypos 15
+}
+NoOp {
+ inputs 0
+ name StarFilter
+ xpos 290
+ ypos -177
+ addUserKnob {20 Stars}
+ addUserKnob {7 Threshold}
+ Threshold 0.999
+ addUserKnob {7 Length R 0 1000}
+ Length 200
+ addUserKnob {7 Rotation R 0 360}
+ Rotation 45
+ addUserKnob {14 Haze R 0 100}
+ Haze 1000
+}

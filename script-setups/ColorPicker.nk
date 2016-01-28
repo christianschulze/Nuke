@@ -1,0 +1,97 @@
+#! C:/Program Files/Nuke6.2v1/Nuke6.2.exe -nx
+version 6.2 v1
+define_window_layout_xml {<?xml version="1.0" encoding="UTF-8"?>
+<layout version="1.0">
+    <window x="0" y="0" w="1928" h="1040" screen="0">
+        <splitter orientation="1">
+            <split size="1209"></split>
+            <splitter orientation="1">
+                <split size="40"></split>
+                <dock id="" hideTitles="1" activePageId="Toolbar.1">
+                    <page id="Toolbar.1"></page>
+                </dock>
+                <split size="1165"></split>
+                <splitter orientation="2">
+                    <split size="779"></split>
+                    <dock id="" activePageId="DAG.1">
+                        <page id="DAG.1"></page>
+                        <page id="DAG.2"></page>
+                    </dock>
+                    <split size="193"></split>
+                    <dock id="" activePageId="Curve Editor.1">
+                        <page id="Curve Editor.1"></page>
+                    </dock>
+                </splitter>
+            </splitter>
+            <split size="699"></split>
+            <dock id="" activePageId="Properties.1">
+                <page id="Properties.1"></page>
+                <page id="Script Editor.1"></page>
+            </dock>
+        </splitter>
+    </window>
+    <window x="1920" y="0" w="1280" h="1024" fullscreen="1" screen="1">
+        <splitter orientation="2">
+            <split size="1024"></split>
+            <dock id="" activePageId="Viewer.1">
+                <page id="Viewer.1"></page>
+            </dock>
+        </splitter>
+    </window>
+</layout>
+}
+Root {
+ inputs 0
+ name e:/_DA/Projects/nukescript-setups/ColorPicker.nk
+ fps 25
+ format "1920 1080 0 0 1920 1080 1 HD"
+ proxy_type scale
+ proxy_format "1024 778 0 0 1024 778 1 1K_Super_35(full-ap)"
+}
+Group {
+ inputs 0
+ name ColorPicker
+ help "Pulls a matte out of the picked color and the tolerances. The alpha channel contains this matte."
+ xpos -40
+ ypos -82
+ addUserKnob {20 colorpicker l ColorPicker}
+ addUserKnob {18 color l Color t "Select the color to be picked"}
+ color {0 0 0}
+ addUserKnob {7 tolerance l Tolerance t "Increases the range of colors around the picked color" R 1e-007 0.5}
+ tolerance 1e-007
+ addUserKnob {7 soften l Soften t "Softly increases the range of colors around the picked color"}
+}
+ Input {
+  inputs 0
+  name Input
+  xpos 0
+ }
+ Keyer {
+  operation "red keyer"
+  range {{parent.color.r-parent.tolerance-parent.soften i} {parent.color.r-parent.tolerance i} {parent.color.r+parent.tolerance i} {parent.color.r+parent.tolerance+parent.soften i}}
+  name Keyer1
+  xpos 0
+  ypos 113
+ }
+ Keyer {
+  combine intersect
+  operation "green keyer"
+  range {{parent.color.g-parent.tolerance-parent.soften i} {parent.color.g-parent.tolerance i} {parent.color.g+parent.tolerance i} {parent.color.g+parent.tolerance+parent.soften i}}
+  name Keyer2
+  xpos 0
+  ypos 151
+ }
+ Keyer {
+  combine intersect
+  operation "blue keyer"
+  range {{parent.color.b-parent.tolerance-parent.soften i} {parent.color.b-parent.tolerance i} {parent.color.b+parent.tolerance i} {parent.color.b+parent.tolerance+parent.soften i}}
+  name Keyer3
+  xpos 0
+  ypos 189
+ }
+ Output {
+  name Output
+  xpos 0
+  ypos 300
+ }
+end_group

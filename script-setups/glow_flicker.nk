@@ -1,0 +1,90 @@
+#! C:/Program Files/Nuke6.3v2/Nuke6.3.exe -nx
+version 6.3 v2
+define_window_layout_xml {<?xml version="1.0" encoding="UTF-8"?>
+<layout version="1.0">
+    <window x="0" y="0" w="1936" h="1080" screen="0">
+        <splitter orientation="1">
+            <split size="1214"/>
+            <splitter orientation="1">
+                <split size="40"/>
+                <dock id="" hideTitles="1" activePageId="Toolbar.1">
+                    <page id="Toolbar.1"/>
+                </dock>
+                <split size="1170"/>
+                <splitter orientation="2">
+                    <split size="813"/>
+                    <dock id="" activePageId="DAG.1">
+                        <page id="DAG.1"/>
+                    </dock>
+                    <split size="202"/>
+                    <dock id="" activePageId="Curve Editor.1">
+                        <page id="Curve Editor.1"/>
+                        <page id="DopeSheet.1"/>
+                    </dock>
+                </splitter>
+            </splitter>
+            <split size="702"/>
+            <splitter orientation="2">
+                <split size="813"/>
+                <dock id="" activePageId="Properties.1">
+                    <page id="Properties.1"/>
+                    <page id="Script Editor.1"/>
+                    <page id="uk.co.thefoundry.DiskCache"/>
+                </dock>
+                <split size="202"/>
+                <dock id="" activePageId="Progress.1">
+                    <page id="Progress.1"/>
+                    <page id="Error Console.1"/>
+                </dock>
+            </splitter>
+        </splitter>
+    </window>
+    <window x="-1280" y="0" w="1280" h="1024" fullscreen="1" screen="1">
+        <splitter orientation="2">
+            <split size="1024"/>
+            <dock id="" activePageId="Viewer.1">
+                <page id="Viewer.1"/>
+            </dock>
+        </splitter>
+    </window>
+</layout>
+}
+Root {
+ inputs 0
+ name E:/_OM/nuke/script-setups/glow_flicker.nk
+ frame 92
+ fps 25
+ format "1920 1080 0 0 1920 1080 1 HD"
+ proxy_type scale
+ proxy_format "1024 778 0 0 1024 778 1 1K_Super_35(full-ap)"
+}
+Constant {
+ inputs 0
+ color 1
+ format "640 480 0 0 640 480 1 PC_Video"
+ name Constant1
+ xpos -40
+ ypos -191
+}
+Reformat {
+ resize none
+ black_outside true
+ name Reformat1
+ xpos -40
+ ypos -119
+}
+Glow {
+ brightness {{"1 + noise(frame*0.7) * 5 / size"}}
+ size 50
+ name Glow1
+ xpos -40
+ ypos -95
+}
+Viewer {
+ frame 92
+ fps 25
+ input_process false
+ name Viewer1
+ xpos -40
+ ypos -9
+}

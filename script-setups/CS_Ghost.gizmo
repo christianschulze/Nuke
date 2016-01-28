@@ -1,0 +1,125 @@
+#! C:/Program Files/Nuke6.3v2/Nuke6.3.exe -nx
+version 6.3 v2
+Gizmo {
+ inputs 2
+ tile_color 0x990000ff
+ addUserKnob {20 CS_Ghost}
+ addUserKnob {7 FadeToGhost}
+ FadeToGhost 1
+ addUserKnob {7 Ghostiness R 0 10}
+ Ghostiness 10
+ addUserKnob {7 Quality R 0 4}
+ Quality 1
+ addUserKnob {7 Shake}
+ Shake 1.2
+ addUserKnob {7 Amplitude R 0 100}
+ Amplitude 100
+ addUserKnob {7 Flicker}
+ Flicker 1
+ addUserKnob {41 Color T ColorCorrect1.gamma}
+ addUserKnob {26 ""}
+ addUserKnob {26 Creator l "" +STARTLINE T "CS_Ghost v1.0 by Christian Schulze - www.christian-schulze.eu"}
+}
+ BackdropNode {
+  inputs 0
+  name GhostEffect
+  tile_color 0x7f00b2ff
+  label "GhostEffect\n"
+  note_font_size 42
+  xpos -126
+  ypos 101
+  bdwidth 396
+  bdheight 108
+ }
+ BackdropNode {
+  inputs 0
+  name Foreground
+  tile_color 0x4ccef00
+  label Foreground
+  note_font_size 42
+  xpos -126
+  ypos 222
+  bdwidth 396
+  bdheight 108
+ }
+ Input {
+  inputs 0
+  name InputFG
+  xpos -150
+  ypos 63
+  number 1
+ }
+ Dot {
+  name Dot1
+  tile_color 0
+  xpos -116
+  ypos 186
+ }
+set N8fe1940 [stack 0]
+ Dot {
+  name Dot2
+  tile_color 0
+  xpos -116
+  ypos 306
+ }
+ CameraShake2 {
+  name CameraShake2_2
+  label "\[value amplitude] px at \[value frequency]"
+  xpos -40
+  ypos 303
+  disable {{amplitude==0}}
+  amplitude {{-Amplitude*FadeToGhost x245 0 x255 -10 -5 R x274 -100}}
+  frequency {{Shake}}
+  cs_center {960 540}
+  motionblur {{parent.parent.Quality}}
+  shutter {{parent.parent.Ghostiness}}
+ }
+push $N8fe1940
+ CameraShake2 {
+  name CameraShake2_1
+  label "\[value amplitude] px at \[value frequency]"
+  selected true
+  xpos -40
+  ypos 183
+  disable {{amplitude==0}}
+  amplitude {{Amplitude*FadeToGhost x245 0 x255 10 5 R x274 100}}
+  frequency {{Shake}}
+  cs_center {960 540}
+  motionblur {{parent.parent.Quality}}
+  shutter {{parent.parent.Ghostiness}}
+ }
+add_layer {rgba rgba.water}
+ ColorCorrect {
+  gamma {1 1.2 1.5 0}
+  name ColorCorrect1
+  xpos 70
+  ypos 183
+ }
+ Input {
+  inputs 0
+  name InputBG
+  xpos 180
+  ypos 63
+ }
+ Merge2 {
+  inputs 2
+  operation matte
+  mix {{(1+noise(frame*0.7)*Flicker)*FadeToGhost*0.5 i}}
+  name Merge1
+  xpos 180
+  ypos 183
+ }
+ Merge2 {
+  inputs 2
+  operation matte
+  mix {{1-(1+noise(frame*0.7)*Flicker)*FadeToGhost i}}
+  name Merge2
+  xpos 180
+  ypos 303
+ }
+ Output {
+  name Output
+  xpos 180
+  ypos 375
+ }
+end_group

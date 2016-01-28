@@ -1,0 +1,21 @@
+set cut_paste_input [stack 0]
+version 8.0 v6
+push $cut_paste_input
+NoOp {
+ name HanergyChecklist
+ tile_color 0xff0000ff
+ label "\[knob this.tile_color 0x00ff00ff]\n\[foreach checkmark \[knobs this] \{\[if !\[value \$checkmark] \{return \"\[knob this.tile_color 0xff0000ff]\"\} else \{continue\}]\}]"
+ selected true
+ xpos 400
+ ypos 519
+ hide_input true
+ addUserKnob {20 checklist l Checklist}
+ addUserKnob {6 output_format l "is output format 4096x2048?" +STARTLINE}
+ addUserKnob {6 output_file_type l "is output file type EXR?" +STARTLINE}
+ addUserKnob {6 softclip l "is softclip node disabled?" +STARTLINE}
+ addUserKnob {6 highlights l "are highlights/superbrights not clamped?" +STARTLINE}
+ addUserKnob {6 black_levels l "are black levels matched?" +STARTLINE}
+ addUserKnob {6 grain l "is grain matched to footage?" +STARTLINE}
+ addUserKnob {6 alpha l "is alpha output reasonable?" +STARTLINE}
+ addUserKnob {6 matte l "is my shot tagged with \"matte_required_for_grading\"?" +STARTLINE}
+}

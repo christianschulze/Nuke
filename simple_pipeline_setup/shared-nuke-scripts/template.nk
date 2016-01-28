@@ -1,0 +1,165 @@
+#! /Applications/Nuke9.0v7/Nuke9.0v7.app/Contents/MacOS//libnuke-9.0.7.dylib -nx
+#write_info Write1 file:"[string trimright [value projectroot] \\/]/[string trimright [value outputfolder] \\/]/[string trimright [value shot] \\/]/[string trimright [value task] \\/]/[if {[value enable_cache]} {return cache/[string trimright [value cache] \\/]/}][if {[value file_type] == "mov"} {return [string trimright [value outputfilename] \\/].[value file_type]} {return [string trimright [value outputfilename] \\/]/[string trimright [value outputfilename] \\/][value padding].[value file_type]}]" format:"1920 1080 1" chans:":" framerange:"1 100" fps:"0" colorspace:"default (sRGB)" datatype:"8 bit" transfer:"unknown" views:"main"
+version 9.0 v7
+define_window_layout_xml {<?xml version="1.0" encoding="UTF-8"?>
+<layout version="1.0">
+    <window x="0" y="1" w="2560" h="1413" maximized="1" screen="0">
+        <splitter orientation="1">
+            <split size="40"/>
+            <dock id="" hideTitles="1" activePageId="Toolbar.1">
+                <page id="Toolbar.1"/>
+            </dock>
+            <split size="1897" stretch="1"/>
+            <splitter orientation="2">
+                <split size="1072"/>
+                <dock id="" hideTitles="1" activePageId="DAG.1" focus="true">
+                    <page id="DAG.1"/>
+                </dock>
+                <split size="315"/>
+                <dock id="" activePageId="Curve Editor.1">
+                    <page id="Curve Editor.1"/>
+                    <page id="DopeSheet.1"/>
+                </dock>
+            </splitter>
+            <split size="615"/>
+            <splitter orientation="2">
+                <split size="1072"/>
+                <dock id="" hideTitles="1" activePageId="Properties.1">
+                    <page id="Properties.1"/>
+                </dock>
+                <split size="315"/>
+                <dock id="" activePageId="Progress.1">
+                    <page id="Progress.1"/>
+                    <page id="uk.co.thefoundry.scripteditor.1"/>
+                </dock>
+            </splitter>
+        </splitter>
+    </window>
+    <window x="2560" y="0" w="2560" h="1440" fullscreen="1" screen="1">
+        <splitter orientation="2">
+            <split size="1440"/>
+            <dock id="" activePageId="Viewer.1">
+                <page id="Viewer.1"/>
+            </dock>
+        </splitter>
+    </window>
+</layout>
+}
+Root {
+ inputs 0
+ name /Volumes/Projects/1513_jeep/03_projects/2d/NUKE/shared-nuke-scripts/template.nk
+ project_directory /Volumes/Projects/1513_jeep/
+ fps 25
+ format "1920 1080 0 0 1920 1080 1 HD_1080"
+ proxy_type scale
+ proxy_format "1024 778 0 0 1024 778 1 1K_Super_35(full-ap)"
+ addUserKnob {20 Deadline}
+ addUserKnob {1 DeadlineSGData l ShotgunKVPs}
+ DeadlineSGData None
+ addUserKnob {1 FrameListMode l FLM}
+ FrameListMode Global
+ addUserKnob {1 CustomFrameList l CFL}
+ CustomFrameList 1-100
+ addUserKnob {1 Department l DPT}
+ addUserKnob {1 Pool l POOL}
+ Pool rndblade
+ addUserKnob {1 SecondarPool l SECPOOL}
+ SecondarPool " "
+ addUserKnob {1 Group l GRP}
+ Group none
+ addUserKnob {1 Priority l PRT}
+ Priority 50
+ addUserKnob {1 MachineLimit l MLM}
+ MachineLimit 0
+ addUserKnob {1 IsBlacklist l IBL}
+ IsBlacklist False
+ addUserKnob {1 MachineList l MLT}
+ addUserKnob {1 LimitGroups l LGP}
+ addUserKnob {1 SubmitSuspended l SUS}
+ SubmitSuspended False
+ addUserKnob {1 ChunkSize l CSZ}
+ ChunkSize 10
+ addUserKnob {1 ConcurrentTasks l CCT}
+ ConcurrentTasks 1
+ addUserKnob {1 LimitConcurrentTasks l LCT}
+ LimitConcurrentTasks True
+ addUserKnob {1 Threads l TRD}
+ Threads 0
+ addUserKnob {1 SubmitScene l SSC}
+ SubmitScene False
+ addUserKnob {1 BatchMode l BTM}
+ BatchMode True
+ addUserKnob {1 ContinueOnError l COE}
+ ContinueOnError False
+ addUserKnob {1 UseNodeRange l UNR}
+ UseNodeRange True
+ addUserKnob {1 UseGpu l GPU}
+ UseGpu False
+ addUserKnob {1 EnforceRenderOrder l ERO}
+ EnforceRenderOrder False
+ addUserKnob {1 UseDraft l UDR}
+ UseDraft False
+ addUserKnob {1 DraftTemplate l DRT}
+ addUserKnob {1 DraftUser l DUR}
+ addUserKnob {1 DraftEntity l DEN}
+ addUserKnob {1 DraftVersion l DVR}
+ addUserKnob {1 DraftExtraArgs l DEA}
+}
+Precomp {
+ inputs 0
+ shownWarningFile /Volumes/Projects/1513_jeep/03_projects/2d/NUKE/shared-nuke-scripts/beforeWrite.nk
+ file 03_projects/2d/NUKE/shared-nuke-scripts/beforeWrite.nk
+ advanced 1
+ output ""
+ name Precomp_beforeWrite
+ xpos -40
+ ypos -181
+}
+Write {
+ file "\[string trimright \[value projectroot] \\\\/]/\[string trimright \[value outputfolder] \\\\/]/\[string trimright \[value shot] \\\\/]/\[string trimright \[value task] \\\\/]/\[if \{\[value enable_cache]\} \{return cache/\[string trimright \[value cache] \\\\/]/\}]\[if \{\[value file_type] == \"mov\"\} \{return \[string trimright \[value outputfilename] \\\\/].\[value file_type]\} \{return \[string trimright \[value outputfilename] \\\\/]/\[string trimright \[value outputfilename] \\\\/]\[value padding].\[value file_type]\}]"
+ file_type jpeg
+ _jpeg_quality 1
+ _jpeg_sub_sampling 4:2:2
+ checkHashOnRead false
+ name Write1
+ label "\[value file]"
+ xpos -40
+ ypos -105
+ addUserKnob {20 PathFragments}
+ addUserKnob {2 projectroot}
+ projectroot "\[value project_directory]"
+ addUserKnob {1 outputfolder}
+ outputfolder 04_renders/010
+ addUserKnob {1 shot}
+ shot 000_000
+ addUserKnob {1 task}
+ task compositing
+ addUserKnob {1 cache}
+ cache denoise
+ addUserKnob {6 enable_cache l enable -STARTLINE}
+ addUserKnob {1 outputfilename}
+ outputfilename "\[file root \[file tail \[value root.name]]]"
+ addUserKnob {1 padding}
+ padding _####
+ addUserKnob {26 ""}
+ addUserKnob {22 copyoutputpath l "Copy output path" T "from PySide import QtGui\n\nclipboard = QtGui.QApplication.clipboard()\npath = nuke.thisNode()\['file'].getEvaluatedValue()\nclipboard.setText(path)" +STARTLINE}
+}
+Viewer {
+ frame 1
+ frame_range 1-100
+ fps 25
+ input_process false
+ name Viewer1
+ xpos -40
+ ypos -9
+}
+Precomp {
+ inputs 0
+ shownWarningFile /Volumes/Projects/1513_jeep/03_projects/2d/NUKE/shared-nuke-scripts/beforeWrite.nk
+ file 03_projects/2d/NUKE/shared-nuke-scripts/VIEWER_INPUT.nk
+ advanced 1
+ output ""
+ name VIEWER_INPUT
+ xpos -150
+ ypos -13
+}
