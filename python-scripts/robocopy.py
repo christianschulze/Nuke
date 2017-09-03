@@ -48,12 +48,12 @@ def copy():
             cmd_dst = os.path.dirname(dst)
             cmd_file = os.path.basename(src)
         cmd = ['robocopy', cmd_src, cmd_dst, cmd_file, '/R:0'] # command line
-        proc = subprocess.Popen(cmd, stdout = subprocess.PIPE) # start the command line process
+        proc = subprocess.Popen(cmd, stderr = subprocess.PIPE) # start the command line process
         task.setProgress(int(i * progIncr)) # update the progress
         task.setMessage(os.path.basename(src)) # inform about the item that is currently copied
 
         while proc.poll() is None: # wait for the copy process to finish for the current folder
-            for line in proc.stdout:
+            for line in proc.stderr:
                 print line
             if task.isCancelled():
                 return
