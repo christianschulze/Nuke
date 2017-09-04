@@ -1,113 +1,30 @@
-set cut_paste_input [stack 0]
-version 10.5 v3
-push $cut_paste_input
-Group {
- name CS_CameraShake1
- tile_color 0x9c0000ff
- selected true
- xpos 2820
- ypos -1210
- addUserKnob {20 CS_CameraShake}
- addUserKnob {3 seed}
- seed 1234
- addUserKnob {26 shake1}
- addUserKnob {14 amplitude1 R 0 100}
- amplitude1 10
- addUserKnob {7 frequency1}
- frequency1 0.01
- addUserKnob {6 disable_shake1 l disable +STARTLINE}
- addUserKnob {26 shake2}
- addUserKnob {14 amplitude2 R 0 100}
- amplitude2 5
- addUserKnob {7 frequency2}
- frequency2 0.1
- addUserKnob {6 disable_shake2 l disable +STARTLINE}
- addUserKnob {26 shake3}
- addUserKnob {14 amplitude3 R 0 100}
- amplitude3 1
- addUserKnob {7 frequency3}
- frequency3 0.5
- addUserKnob {6 disable_shake3 l disable +STARTLINE}
+#! C:/Program Files/Nuke6.3v2/Nuke6.3.exe -nx
+version 6.3 v2
+Gizmo {
+ inputs 0
+ tile_color 0x990000ff
+ label "Output: \[value out]"
+ addUserKnob {20 MapValue}
+ addUserKnob {7 in l InputValue t "The input value to be transformed." R 0 100}
+ in 80
+ addUserKnob {7 inMin l InputMin t "The minimum of the input value." R 0 100}
+ addUserKnob {7 inMax l InputMax t "The maximum of the input value." R 0 100}
+ inMax 100
+ addUserKnob {7 outMin l OutputMin t "The new minimum of the output." R 0 100}
+ outMin 80
+ addUserKnob {7 outMax l OutputMax t "The new maximum of the output." R 0 100}
+ outMax 40
  addUserKnob {26 ""}
- addUserKnob {12 result}
- result {{"(Transform1.disable ? 0 : Transform1.translate) + (Transform2.disable ? 0 : Transform2.translate) + (Transform3.disable ? 0 : Transform3.translate)"} {"(Transform1.disable ? 0 : Transform1.translate) + (Transform2.disable ? 0 : Transform2.translate) + (Transform3.disable ? 0 : Transform3.translate)"}}
- addUserKnob {26 ""}
- addUserKnob {6 autoscale +STARTLINE}
- autoscale true
- addUserKnob {20 post_transform l "post transform" n 1}
- post_transform 0
- addUserKnob {41 translate T Transform5.translate}
- addUserKnob {41 rotate T Transform5.rotate}
- addUserKnob {41 scale T Transform5.scale}
- addUserKnob {41 skewX l "skew X" T Transform5.skewX}
- addUserKnob {41 skewY l "skew Y" T Transform5.skewY}
- addUserKnob {41 skew_order l "skew order" T Transform5.skew_order}
- addUserKnob {41 center T Transform5.center}
- addUserKnob {41 invert_matrix l invert T Transform5.invert_matrix}
- addUserKnob {20 endGroup n -1}
- addUserKnob {26 ""}
- addUserKnob {41 filter T Transform5.filter}
- addUserKnob {41 clamp -STARTLINE T Transform5.clamp}
- addUserKnob {41 black_outside l "black outside" -STARTLINE T Transform5.black_outside}
- addUserKnob {41 motionblur T Transform5.motionblur}
- addUserKnob {41 shutter T Transform5.shutter}
- addUserKnob {41 shutteroffset l "shutter offset" T Transform5.shutteroffset}
- addUserKnob {41 shuttercustomoffset l "" -STARTLINE T Transform5.shuttercustomoffset}
+ addUserKnob {7 out l Output t "The result with a value in the new range." R 0 100}
+ out {{"(in - inMin) / (inMax - inMin) * (outMax - outMin) + outMin"}}
+ addUserKnob {22 UpdateLabel t "Updates the label of this node in the Node Graph. This could be necessary when values are linked via expressions. The update is executed automatically on frame changes." T nuke.updateUI() +STARTLINE}
+ addUserKnob {26 "" +STARTLINE}
+ addUserKnob {26 Creator l "" +STARTLINE T "CS_MapValue v1.0 by Christian Schulze - www.christian-schulze.eu"}
 }
- Input {
-  inputs 0
-  name Input
-  xpos -40
-  ypos 14
- }
- Transform {
-  translate {{"noise(frame * frequency1, 123, seed) * amplitude1 * 2"} {"noise(frame * frequency1, 234, seed) * amplitude1 * 2"}}
-  center {960 540}
-  black_outside false
-  name Transform1
-  xpos -40
-  ypos 86
-  disable {{disable_shake1}}
- }
- Transform {
-  translate {{"noise(frame * frequency2, 345, seed) * amplitude2 * 2"} {"noise(frame * frequency2, 456, seed) * amplitude2 * 2"}}
-  center {960 540}
-  black_outside false
-  name Transform2
-  xpos -40
-  ypos 134
-  disable {{disable_shake2}}
- }
- Transform {
-  translate {{"noise(frame * frequency3, 567, seed) * amplitude3 * 2"} {"noise(frame * frequency3, 678, seed) * amplitude3 * 2"}}
-  center {960 540}
-  black_outside false
-  name Transform3
-  xpos -40
-  ypos 182
-  disable {{disable_shake3}}
- }
- Transform {
-  scale {{"max((width + (abs(amplitude1.w) + abs(amplitude2.w) + abs(amplitude3.w)) * 2) / width, (height + (abs(amplitude1.h) + abs(amplitude2.h) + abs(amplitude3.h)) * 2) / height)"}}
-  center {{"width / 2"} {"height / 2"}}
-  black_outside false
-  name Transform4
-  xpos -40
-  ypos 230
-  disable {{!autoscale}}
- }
- Transform {
-  center {960 540}
-  black_outside false
-  motionblur 1
-  shutteroffset centred
-  name Transform5
-  xpos -40
-  ypos 278
- }
  Output {
-  name Output
-  xpos -40
-  ypos 348
+  inputs 0
+  name Output1
+  xpos 0
+  ypos 300
  }
 end_group
