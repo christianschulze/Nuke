@@ -35,11 +35,14 @@ def copy():
     task = nuke.ProgressTask('Copying all inputs...') # create a progress bar
     progIncr = 100.0 / len(pathlist) # calculate the increment for the progress
     for i, src in enumerate(pathlist):
+        # copy whole source folder structure to the destination to preserve the folder structure
         (src_drive, src_tail) = os.path.splitdrive(src)
-        dst = os.path.join(destination, src_drive.replace(':', '_'), src_tail) # change just the drive letter for the destination to preserve the folder structure
+        dst = os.path.join(destination, src_drive.replace(':', '_'), src_tail.lstrip('/\\'))
         src = os.path.normpath(src)
         dst = os.path.normpath(dst)
+        
         print 'copying ' + src + ' to ' + dst
+        
         cmd_src = src
         cmd_dst = dst
         cmd_file = '*.*'
