@@ -1,5 +1,7 @@
 import CS_SnappyBackdrops
 
+# TODO: move Defaults to menu.py
+
 # Defaults
 nuke.knobDefault('Root.format','HD_1080')
 nuke.knobDefault('Root.fps','25')
@@ -13,6 +15,11 @@ nuke.knobDefault('Read.label', '[lindex [value format] end]')
 nuke.knobDefault('TimeOffset.label', '[value time_offset]')
 nuke.knobDefault('Card.rows', '2')
 nuke.knobDefault('Card.columns', '2')
+nuke.knobDefault('CornerPin2D.from4', '0 {height}')
+nuke.knobDefault('OFlow.input.first', '{input.first_frame}')
+nuke.knobDefault('OFlow.input.last', '{input.last_frame}')
+nuke.knobDefault('Kronos.input.first', '{input.first_frame}')
+nuke.knobDefault('Kronos.input.last', '{input.last_frame}')
 
 #label = '[if {[value which]>0 && ![value disable]} {return "[knob this.tile_color 0x00ff00ff]"} else {return "[knob this.tile_color 0xff0000ff]"}]'
 #nuke.knobDefault('Switch.label', label)
