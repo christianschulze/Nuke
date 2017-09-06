@@ -36,7 +36,7 @@ def copy():
     progIncr = 100.0 / len(pathlist) # calculate the increment for the progress
     for i, src in enumerate(pathlist):
         (src_drive, src_tail) = os.path.splitdrive(src)
-        dst = os.path.join(destination, src_tail.lstrip('/\\')) # change just the drive letter for the destination to preserve the folder structure
+        dst = os.path.join(destination, src_drive.replace(':', '_'), src_tail) # change just the drive letter for the destination to preserve the folder structure
         src = os.path.normpath(src)
         dst = os.path.normpath(dst)
         print 'copying ' + src + ' to ' + dst
