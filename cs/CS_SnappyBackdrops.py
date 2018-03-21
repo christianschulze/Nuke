@@ -33,8 +33,8 @@ def resizeBackdrop():
     headroom = 4 * grid_height
     bdX -= grid_width * 0.5
     bdY -= grid_height * 0.5 + headroom
-    bdW += grid_width * 1.0
-    bdH += grid_height * 1.0 + headroom
+    bdW += grid_width * 1.5
+    bdH += grid_height * 1.5 + headroom
 
     # create the backdrop
     n = nuke.nodes.BackdropNode(xpos = bdX, ypos = bdY, bdwidth = bdW, bdheight = bdH, note_font_size = 42)
