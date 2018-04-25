@@ -1,3 +1,32 @@
+import CS_SnappyBackdrops
+
+# Defaults
+nuke.knobDefault('Root.format','HD_1080')
+nuke.knobDefault('Root.fps','25')
+#nuke.knobDefault('Roto.output', 'alpha')
+nuke.knobDefault('Invert.channels', 'alpha')
+nuke.knobDefault('CornerPin2D.from1', '0 0')
+nuke.knobDefault('CornerPin2D.from2', '{width} 0')
+nuke.knobDefault('CornerPin2D.from3', '{width} {height}')
+nuke.knobDefault('CornerPin2D.from4', '0 {height}')
+nuke.knobDefault('Read.label', '[lindex [value format] end]\n[value first]-[value last]')
+nuke.knobDefault('TimeOffset.label', '[value time_offset]')
+nuke.knobDefault('Retime.shutter', '{1/speed}')
+nuke.knobDefault('Card.rows', '2')
+nuke.knobDefault('Card.columns', '2')
+nuke.knobDefault('OFlow.input.first', '{input.first_frame}')
+nuke.knobDefault('OFlow.input.last', '{input.last_frame}')
+nuke.knobDefault('Kronos.input.first', '{input.first_frame}')
+nuke.knobDefault('Kronos.input.last', '{input.last_frame}')
+nuke.knobDefault('Shuffle.label', '[value in]')
+
+def switch_color():
+    if nuke.thisNode().knob('which').getValue() > 0 and not nuke.thisNode().knob('disable').getValue():
+        nuke.thisNode().knob('tile_color').setValue(0x00ff00ff)
+    else:
+        nuke.thisNode().knob('tile_color').setValue(0xff0000ff)
+nuke.addKnobChanged(switch_color, nodeClass='Switch')
+
 # Menu
 toolbar = nuke.menu('Nodes')
 filterMenu = toolbar.findItem('Filter')
