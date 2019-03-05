@@ -4,22 +4,29 @@ prefs = nuke.toNode('preferences')
 grid_width = prefs['GridWidth'].getValue()
 grid_height = prefs['GridHeight'].getValue()
 
-def resize_to_grid():
-    n = nuke.thisNode()
-    k = nuke.thisKnob()
-    if knob_to_grid(k, 'bdwidth', grid_width) or knob_to_grid(k, 'bdheight', grid_height):
-        nuke.autoplaceSnap(n)
 
-def knob_to_grid(knob, knob_name, grid_value):
-    if knob.name() == knob_name:
-        value = knob.getValue()
-        base = 2 * grid_value
-        new_value = int(base * round(float(value) / base))
-        knob.setValue(new_value)
-        return True
-    return False
+def snap_knob_to_grid(knob, grid_value):
+    value = knob.getValue()
+    base = 2 * grid_value
+    new_value = int(base * round(float(value) / base))
+    knob.setValue(new_value)
 
-def resizeBackdrop():
+def resize_knob_to_grid(knob):
+    snap = False
+    if knob.name() == 'bdwidth':
+        snap_knob_to_grid(knob, grid_width)
+        snap = True
+    if knob.name() == 'bdheight':
+        snap_knob_to_grid(knob, grid_height)
+        snap = True
+    if snap:
+        nuke.autoplaceSnap(knob.node())
+
+def resize_knob_to_grid_callback():
+    knob = nuke.thisKnob()
+    resize_knob_to_grid(knob)
+
+def create_snappy_backdrop():
     selNodes = nuke.selectedNodes()
     if not selNodes:
         return nuke.nodes.BackdropNode()
@@ -44,10 +51,16 @@ def resizeBackdrop():
     for node in selNodes:
         node['selected'].setValue(True)
 
+def snap_all_backdrops():
+    backdrops = nuke.allNodes('BackdropNode')
+    for backdrop in backdrops:
+        resize_knob_to_grid(backdrop.knob('bdwidth'))
+        resize_knob_to_grid(backdrop.knob('bdheight'))
+
 # add the resize to grid callback
-nuke.addKnobChanged(resize_to_grid, nodeClass = 'BackdropNode')
+nuke.addKnobChanged(resize_knob_to_grid_callback, nodeClass = 'BackdropNode')
 
 # overwrite the backdrop creation command
 toolbar = nuke.menu('Nodes')
 otherMenu = toolbar.findItem('Other')
-otherMenu.addCommand('Backdrop', 'CS_SnappyBackdrops.resizeBackdrop()', 'alt+b', icon = "Backdrop.png")
+otherMenu.addCommand('Backdrop', 'CS_SnappyBackdrops.create_snappy_backdrop()', 'alt+b', icon = "Backdrop.png")
