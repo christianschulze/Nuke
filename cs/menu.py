@@ -1,4 +1,5 @@
 import CS_SnappyBackdrops
+import CS_CreateExrCamVray
 
 # Defaults
 nuke.knobDefault('Root.format','HD_1080')
@@ -54,6 +55,7 @@ toolbar.addCommand('cs/CS_RoughenEdges', 'nuke.createNode("CS_RoughenEdges")')
 toolbar.addCommand('cs/CS_Backdrop', 'nuke.nodes.BackdropNode(label = \'<center><img src="cs.png">\', tile_color = ' + str(int('99000000', 16)) + ')')
 # color is hex to int with alpha (rgba): #cc000000 = 3422552064
 toolbar.addCommand('cs/Snap all Backdrops', 'CS_SnappyBackdrops.snap_all_backdrops()')
+toolbar.addCommand("cs/Create Camera from VRay EXR", "CS_CreateExrCamVray.create_camera_from_vray_exr(nuke.selectedNode())")
 
 # Scripts
 
