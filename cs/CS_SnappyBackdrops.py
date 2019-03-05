@@ -8,7 +8,7 @@ grid_height = prefs['GridHeight'].getValue()
 def snap_knob_to_grid(knob, grid_value):
     value = knob.getValue()
     base = 2 * grid_value
-    new_value = int(base * round(float(value) / base))
+    new_value = int(max(base * round(float(value) / base), base))
     knob.setValue(new_value)
 
 def resize_knob_to_grid(knob):
