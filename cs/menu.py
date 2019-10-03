@@ -21,6 +21,7 @@ nuke.knobDefault('OFlow.input.last', '{input.last_frame}')
 nuke.knobDefault('Kronos.input.first', '{input.first_frame}')
 nuke.knobDefault('Kronos.input.last', '{input.last_frame}')
 nuke.knobDefault('Shuffle.label', '[value in]')
+nuke.knobDefault('Switch.which', '1')
 
 def switch_color():
     if nuke.thisNode().knob('which').getValue() > 0 and not nuke.thisNode().knob('disable').getValue():
