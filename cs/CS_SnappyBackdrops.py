@@ -46,6 +46,9 @@ def create_snappy_backdrop():
     # create the backdrop
     n = nuke.nodes.BackdropNode(xpos = bdX, ypos = bdY, bdwidth = bdW, bdheight = bdH, note_font_size = 42)
 
+    # open the backdrop
+    n.showControlPanel()
+
     # revert to previous selection
     n['selected'].setValue(False)
     for node in selNodes:
