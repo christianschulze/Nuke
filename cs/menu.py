@@ -37,12 +37,14 @@ nuke.addKnobChanged(switch_color, nodeClass='Switch')
 toolbar = nuke.menu('Nodes')
 filterMenu = toolbar.findItem('Filter')
 colorMenu = toolbar.findItem('Color')
+otherMenu = toolbar.findItem('Other')
 
 erode = filterMenu.findItem('Erode (filter)')
 filterMenu.addCommand(erode.name(), erode.script(), 'e', erode.icon())
 
 filterMenu.addCommand('AlphaBlur', 'nuke.createNode("Blur", "channels alpha")', 'shift+b', "Blur.png")
 colorMenu.addCommand('AlphaGrade', 'nuke.createNode("Grade", "channels alpha white_clamp 1")', 'shift+g', "Grade.png")
+otherMenu.addCommand('NamedDot', 'nuke.createNode("Dot", "label [value\ input.name] note_font_size 42 hide_input 1")', 'shift+.', "Dot.png")
 
 toolbar.addCommand('Transform/Reformat', 'nuke.createNode("Reformat")', 'ctrl+r')
 
