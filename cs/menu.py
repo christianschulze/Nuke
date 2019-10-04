@@ -21,9 +21,6 @@ nuke.knobDefault('OFlow.input.last', '{input.last_frame}')
 nuke.knobDefault('Kronos.input.first', '{input.first_frame}')
 nuke.knobDefault('Kronos.input.last', '{input.last_frame}')
 nuke.knobDefault('Shuffle.label', '[value in]')
-nuke.knobDefault('Dot.label', '[value input.name]')
-nuke.knobDefault('Dot.note_font_size', '42')
-nuke.knobDefault('Dot.hide_input', '1')
 nuke.knobDefault('Switch.which', '1')
 
 def switch_color():
